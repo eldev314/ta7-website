@@ -52,6 +52,11 @@ def get_login(request:Request) -> HTMLResponse:
   with open("views/login.html") as html:
     return HTMLResponse(content=html.read())
 
+@app.get('/voice')
+def get_login(request:Request) -> HTMLResponse:
+  with open("views/voice_ai.html") as html:
+    return HTMLResponse(content=html.read())
+
 @app.get('/create_user')
 def get_login(request:Request) -> HTMLResponse:
   with open("views/create_user.html") as html:
