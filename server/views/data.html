@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Data Visualization</title>
+    <!-- Include Chart.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Temperature Data Visualization</h1>
+    
+    <label for="locationDropdown">Select Location:</label>
+    <select id="locationDropdown">
+        <!-- Populate options dynamically based on fetched data -->
+        <!-- Example options -->
+        <option value="Jacobs Hall">Jacobs Hall</option>
+        <option value="Pepper Canyon Hall">Pepper Canyon Hall</option>
+        <option value="RIMAC">RIMAC</option>
+        <option value="Franklin Antonio Hall">Franklin Antonio Hall</option>
+        <option value="Warren Lecture Hall">Warren Lecture Hall</option>
+    </select>
+
+    <label for="sensorDropdown">Select Sensor Type:</label>
+    <select id="sensorDropdown">
+        <!-- Populate options dynamically based on available sensors -->
+        <!-- Example options -->
+        <option value="temperature">Temperature</option>
+        <option value="light">Light</option>
+        <option value="pressure">Pressure</option>
+        <option value="humidity">Humidity</option>
+    </select>
+
+    <label for="startTime">Start Time:</label>
+    <input type="datetime-local" id="startTime">
+
+    <label for="endTime">End Time:</label>
+    <input type="datetime-local" id="endTime">
+
+    <button id="getDataBtn">Get Data</button>
+    
+    <div id="chartContainer">
+        <canvas id="temperatureChart" width="800" height="400"></canvas>
+    </div>
+
+    <script src="public/main.js"></script>
+</body>
+</html>
