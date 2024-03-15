@@ -1,15 +1,17 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Voice Assistant</title>
+    <link rel='stylesheet' type='text/css' href='public/rest.css'>
 </head>
 <body>
     <h1>Voice Assistant for Weather Queries</h1>
     <button id="startRecordingBtn">Start Recording</button>
+    <button id="stopRecordingBtn" style="display: none;">Stop Recording</button> <!-- Add this for stopping the recording -->
+    <p id="status"></p> <!-- Status text -->
     <p><strong>Transcription:</strong> <span id="transcription"></span></p>
     <p><strong>Answer:</strong> <span id="answer"></span></p>
-    <script src="voice.js"></script>
+    <script src="public/voice.js"></script> <!-- Ensure the script tag is at the end of the body for proper loading -->
 </body>
 </html>

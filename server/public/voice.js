@@ -1,5 +1,9 @@
-document.getElementById('startRecordingBtn').addEventListener('click', () => {
-    let mediaRecorder;
+let mediaRecorder; // Declare mediaRecorder globally to access it outside the click event listener
+
+document.getElementById('startRecordingBtn').addEventListener('click', startRecording);
+document.getElementById('stopRecordingBtn').addEventListener('click', stopRecording);
+
+function startRecording() {
     let audioChunks = [];
 
     navigator.mediaDevices.getUserMedia({ audio: true })
@@ -8,36 +12,55 @@ document.getElementById('startRecordingBtn').addEventListener('click', () => {
         mediaRecorder.ondataavailable = event => {
             audioChunks.push(event.data);
         };
-        mediaRecorder.start();
 
-        setTimeout(() => {
-            mediaRecorder.stop(); // Stops recording after 15 seconds
-        }, 15000);
-    });
+        // Correct placement of onstop within the scope where mediaRecorder is defined
+        mediaRecorder.onstop = async () => {
+            const audioBlob = new Blob(audioChunks);
+            const formData = new FormData();
+            formData.append("file", audioBlob);
+            formData.append("auth", "A17565121"); 
 
-    mediaRecorder.onstop = async () => {
-        const audioBlob = new Blob(audioChunks);
-        const formData = new FormData();
-        formData.append("file", audioBlob);
-        formData.append("auth", "A17565121"); 
-
-        try {
-            const response = await fetch("https://ece140.frosty-sky-f43d.workers.dev/api/transcribe", {
-                method: "POST",
-                body: formData,
-            });
-            const data = await response.json();
-            if (response.ok) {
-                displayTranscription(data.transcription);
-                callInferenceAPI(data.transcription);
-            } else {
-                console.error('Error during transcription:', data);
+            try {
+                const response = await fetch("https://ece140.frosty-sky-f43d.workers.dev/api/transcribe", {
+                    method: "POST",
+                    body: formData,
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    displayTranscription(data.transcription);
+                    callInferenceAPI(data.transcription);
+                } else {
+                    console.error('Error during transcription:', data);
+                    updateUI('error', 'Error during transcription.');
+                }
+            } catch (error) {
+                console.error('Failed to transcribe audio:', error);
+                updateUI('error', 'Failed to transcribe audio.');
             }
-        } catch (error) {
-            console.error('Failed to transcribe audio:', error);
-        }
-    };
-});
+        };
+
+        mediaRecorder.start();
+        updateUI('recording', 'Recording...');
+        document.getElementById('stopRecordingBtn').style.display = 'inline'; // Show stop button
+    })
+    .catch(error => {
+        console.error('Error getting user media:', error);
+        updateUI('error', 'Error accessing your microphone. Please check permissions.');
+    });
+}
+
+function stopRecording() {
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        updateUI('stopped', 'Recording stopped.');
+        document.getElementById('stopRecordingBtn').style.display = 'none'; // Hide stop button
+    }
+}
+
+function updateUI(status, message) {
+    const statusText = document.getElementById("status");
+    statusText.innerText = message;
+}
 
 function displayTranscription(transcription) {
     document.getElementById("transcription").innerText = transcription;
@@ -45,7 +68,7 @@ function displayTranscription(transcription) {
 
 async function callInferenceAPI(transcription) {
     try {
-        const sensorDataResponse = await fetch('http://127.0.0.1:8000/query_sensor_data?auth=A17565121&userId=A17565121');
+        const sensorDataResponse = await fetch('http://127.0.0.1:8000/query_sensor_data?auth=A17565121&userId=A17565121'); // Left sensorType empty to to get all
         const sensorDataJson = await sensorDataResponse.json();
         if (!sensorDataResponse.ok) {
             throw new Error('Failed to fetch sensor data');
@@ -72,7 +95,7 @@ async function callInferenceAPI(transcription) {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                auth: "A17565121", // Replace with your actual UCSD PID
+                auth: "A17565121", 
                 sensorData: sensorData,
                 question: transcription,
             }),
