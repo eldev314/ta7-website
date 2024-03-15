@@ -128,6 +128,7 @@ async function displayAnswer(data) {
     document.getElementById("answer").innerText = answerText;
     // Store the answer for playback
     document.getElementById("playbackBtn").setAttribute("data-text-to-speak", answerText);
+    document.getElementById("answer").innerText = answerText;
     document.getElementById("playbackBtn").style.display = 'inline'; // Show the playback button
 }
 
@@ -147,6 +148,7 @@ function getRequestedLanguage(transcription) {
 
 async function translateText(text, targetLang) {
     try {
+        console.log(targetLang);
         const response = await fetch("https://ece140.frosty-sky-f43d.workers.dev/api/translate", {
             method: "POST",
             headers: {
@@ -159,9 +161,10 @@ async function translateText(text, targetLang) {
             }),
         });
         const data = await response.json();
+        
         console.log('Translation API response:', data); // Debugging line
         if (response.ok) {
-            return data.translation; // Return the translation
+            return data.transcription; // Return the translation
         } else {
             console.error('Error during translation:', data);
             return null;

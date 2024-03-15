@@ -1,91 +1,102 @@
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  background: #222;
+  background: #f4f4f4; /* Very light gray background */
   margin: 2rem;
-  color: #eee;
-  font-size: 1.5rem;
-  font-family: sans-serif;
+  color: #333; /* Dark gray text color */
+  font-size: 1.2rem; /* Larger font size */
+  font-family: Arial, sans-serif; /* Use Arial or a sans-serif font */
 }
 
-.container > * {
-  display: none;
+button,
+input[type="submit"] {
+  padding: 0.8rem 1.5rem; /* Padding for buttons and submit inputs */
+  font-size: 1.2rem; /* Button and input text size */
+  border: none; /* Remove default border */
+  background-color: #449ee3; /* Blue button background color */
+  color: #fff; /* White button text color */
+  cursor: pointer; /* Show pointer cursor on hover */
+  border-radius: 0.4rem; /* Rounded corners for buttons and inputs */
 }
 
-.container[data-mode='viewing'] > .table_view {
-  display:block;
-  margin-top: 6rem;
-  box-shadow: 0 0 1rem rgba(255,255,255,0.15);
+button:hover,
+input[type="submit"]:hover {
+  background-color: #57b5f3; /* Lighter blue on hover */
 }
 
-.container[data-mode='editing'] > .edit_view {
-  display:block;
-  margin-top: 6rem;
-  box-shadow: 0 0 0.25rem rgba(255,255,255,0.15);
+button:focus,
+input[type="submit"]:focus {
+  outline: none; /* Remove focus outline */
 }
 
-.grid_table .header {
-  display: grid;
-  grid-template-columns: 1fr 2fr 2fr 2fr 3rem 3rem;
-  background-color: #449ee3;
-  color: #ffffff;
-  text-align: left;
-  padding: 1rem 1rem;
+button,
+input[type="submit"] {
+  display: block; /* Make buttons and submit inputs block-level elements */
+  margin: 0 auto 1rem; /* Center buttons and submit inputs horizontally with bottom margin */
 }
 
-.grid_table .row {
-  display: grid;
-  grid-template-columns: 1fr 2fr 2fr 2fr 3rem 3rem;
-  background-color: #555555;
-  padding: 0.5rem 1rem;
-
+input[type="text"],
+input[type="password"] {
+  padding: 0.6rem 1.2rem; /* Padding for text and password inputs */
+  font-size: 1.2rem; /* Input text size */
+  border: none; /* Remove default border */
+  background-color: #fff; /* White background color */
+  color: #333; /* Dark gray text color */
+  border-radius: 0.4rem; /* Rounded corners for inputs */
 }
 
-.grid_table .row:nth-child(odd) {
-  background-color: #454545;
+input[type="text"]:hover,
+input[type="password"]:hover {
+  background-color: #f0f0f0; /* Light gray background on hover */
 }
 
-.form_row {
-  margin-top: 0.25rem;
-  display:block;
-  padding: 1rem;
-  background-color: #333;
+input[type="text"]:focus,
+input[type="password"]:focus {
+  outline: none; /* Remove focus outline */
+  box-shadow: 0 0 0 2px #449ee3; /* Add focus border */
 }
 
-.form_row input {
-  padding: 0.5rem;
-  font-size: 1.5rem;
+select {
+  padding: 0.6rem 1.2rem; /* Padding for dropdown */
+  font-size: 1.2rem; /* Dropdown text size */
+  border: none; /* Remove default border */
+  background-color: #fff; /* White background color */
+  color: #333; /* Dark gray text color */
+  cursor: pointer; /* Show pointer cursor on hover */
+  border-radius: 0.4rem; /* Rounded corners for dropdown */
 }
 
-.form_row input[type=submit] {
-  padding: 0.5rem;
-  background-color: #449ee3;
-  color: #ffffff;
-  cursor: pointer;
+/* Styling for hover and focus states */
+select:hover {
+  background-color: #f0f0f0; /* Light gray background on hover */
 }
 
-.form_row .save_button {
-  padding: 0.5rem;
-  background-color: #449ee3;
-  border: 3px solid #555;
-  color: #ffffff;
-  cursor: pointer;
+select:focus {
+  outline: none; /* Remove focus outline */
+  box-shadow: 0 0 0 2px #449ee3; /* Add focus border */
 }
 
-.form_row .cancel_button {
-  padding: 0.5rem;
-  background-color: #555;
-  border: 1px solid #ddd;
-  cursor: pointer;
+/* General styling for datetime inputs */
+.datetime-input {
+  padding: 0.6rem 1.2rem; /* Padding for datetime inputs */
+  font-size: 1.0rem; /* Datetime input text size */
+  border: none; /* Remove default border */
+  background-color: #fff; /* White background color */
+  color: #333; /* Dark gray text color */
+  cursor: pointer; /* Show pointer cursor on hover */
+  border-radius: 0.4rem; /* Rounded corners for datetime inputs */
 }
 
-.edit:hover, .delete:hover {
-  cursor: pointer;
+/* Styling for hover and focus states */
+.datetime-input:hover {
+  background-color: #f0f0f0; /* Light gray background on hover */
 }
 
-.logout_button {
-  margin-top: 1rem;
-  padding: 0.5rem;
-  background-color: #555;
-  border: 1px solid #ddd;
-  cursor: pointer;
-  display: inline-block;
+.datetime-input:focus {
+  outline: none; /* Remove focus outline */
+  box-shadow: 0 0 0 2px #449ee3; /* Add focus border */
 }

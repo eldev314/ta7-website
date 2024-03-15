@@ -10,19 +10,23 @@
   </head>
   <body>
 
-    <h1>Welcome, Please Login</h1>
+    <h1 style="text-align: center; margin-bottom: 20px;">Welcome, Please Login</h1>
 
     <main>
       <form name='login_form' action='/login' method='POST'>
-        <div class='form_row'>
-          <input type='text' name='username' placeholder='Username'>
-          <input type='password' name='password' placeholder='Password'>
-          <input type='submit' value='Login'>
+        <div class='form_row' style="text-align: center; padding-bottom: 10px;">
+          <input type='text' name='username' placeholder='Username' style='display: block; margin: 0 auto; padding: 10px;'>
+        </div>
+        <div class='form_row' style="text-align: center; padding-bottom: 10px;">
+          <input type='password' name='password' placeholder='Password' style='display: block; margin: 0 auto; padding: 10px;'>
+        </div>
+        <div class='form_row' style="text-align: center; padding-bottom: 20px;">
+          <input type='submit' value='Login' style='display: block; margin: 0 auto; padding: 10px;'>
         </div>
       </form>
     </main>
 
-    <p>Want to create a new account? <a href='/create_user'>Create Account</a></p>
+    <p style="text-align: center;">Want to create a new account? <a href='/create_user'>Create Account</a></p>
 
   </body>
 </html>

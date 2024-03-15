@@ -52,20 +52,29 @@ def get_login(request:Request) -> HTMLResponse:
   with open("views/login.html") as html:
     return HTMLResponse(content=html.read())
 
-@app.get('/voice')
-def get_login(request:Request) -> HTMLResponse:
-  with open("views/voice_ai.html") as html:
-    return HTMLResponse(content=html.read())
+@app.get('/voice', response_class=HTMLResponse)
+def get_voice_page(request: Request) -> HTMLResponse:
+    session = sessions.get_session(request)
+    if len(session) > 0 and session.get('logged_in'):
+        with open("views/voice_ai.html") as html:
+            return HTMLResponse(content=html.read())
+    else:
+        return HTMLResponse(content="You are not logged in. Please <a href='/login'>log in</a> to access the voice AI.")
 
 @app.get('/create_user')
-def get_login(request:Request) -> HTMLResponse:
+def get_create_user(request:Request) -> HTMLResponse:
   with open("views/create_user.html") as html:
     return HTMLResponse(content=html.read())
   
-@app.get('/data')
-def get_login(request:Request) -> HTMLResponse:
-  with open("views/data.html") as html:
-    return HTMLResponse(content=html.read())
+@app.get('/data', response_class=HTMLResponse)
+def get_data_page(request: Request) -> HTMLResponse:
+    session = sessions.get_session(request)
+    if len(session) > 0 and session.get('logged_in'):
+        with open("views/data.html") as html:
+            return HTMLResponse(content=html.read())
+    else:
+        return HTMLResponse(content="You are not logged in. Please <a href='/login'>log in</a> to access the data.")
+
 
 @app.post('/login')
 def post_login(visitor:Visitor, request:Request, response:Response) -> dict:

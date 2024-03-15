@@ -6,9 +6,12 @@
     <title>Temperature Data Visualization</title>
     <!-- Include Chart.js from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" type="text/css" href="public/rest.css">
+
 </head>
 <body>
-    <h1>Temperature Data Visualization</h1>
+    <h1 style="margin-bottom: 2rem;">Temperature Data Visualization</h1>
+
     
     <label for="locationDropdown">Select Location:</label>
     <select id="locationDropdown">
@@ -32,12 +35,12 @@
     </select>
 
     <label for="startTime">Start Time:</label>
-    <input type="datetime-local" id="startTime">
+    <input type="datetime-local" id="startTime" class="datetime-input">
 
     <label for="endTime">End Time:</label>
-    <input type="datetime-local" id="endTime">
+    <input type="datetime-local" id="endTime" class="datetime-input">
 
-    <button id="getDataBtn">Get Data</button>
+    <button id="getDataBtn" style='margin: 10px;'>Get Data</button>
     
     <div id="chartContainer">
         <canvas id="temperatureChart" width="800" height="400"></canvas>
