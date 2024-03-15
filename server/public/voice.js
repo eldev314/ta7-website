@@ -1,4 +1,4 @@
-let mediaRecorder; // Declare mediaRecorder globally to access it outside the click event listener
+let mediaRecorder; // Declare mediaRecorder globally 
 
 document.getElementById('startRecordingBtn').addEventListener('click', startRecording);
 document.getElementById('stopRecordingBtn').addEventListener('click', stopRecording);
@@ -13,7 +13,7 @@ function startRecording() {
             audioChunks.push(event.data);
         };
 
-        // Correct placement of onstop within the scope where mediaRecorder is defined
+        
         mediaRecorder.onstop = async () => {
             const audioBlob = new Blob(audioChunks);
             const formData = new FormData();
@@ -74,18 +74,18 @@ async function callInferenceAPI(transcription) {
             throw new Error('Failed to fetch sensor data');
         }
 
-        // Assuming sensorDataJson.results is an array of sensor readings
+       
         const latestSensorData = sensorDataJson.results.reduce((acc, curr) => {
-            // If current sensor type is not yet in acc or is older, update it
+            // If current sensor type is not yet in acc or is older then update it
             if (!acc[curr.sensorType] || new Date(acc[curr.sensorType].time) < new Date(curr.time)) {
-                acc[curr.sensorType] = curr.value; // Store only the value for simplicity
+                acc[curr.sensorType] = curr.value; 
             }
             return acc;
         }, {});
 
-        // Ensure we have data for all expected sensor types, even if it's just a default or placeholder value
+        // Ensure we have data for all expected sensor types
         const sensorData = {
-            temperature: latestSensorData['temperature'] || 0, // Consider a more reasonable default if possible
+            temperature: latestSensorData['temperature'] || 0, 
             humidity: latestSensorData['humidity'] || 0,
             light: latestSensorData['light'] || 0,
             pressure: latestSensorData['pressure'] || 0,
@@ -121,7 +121,7 @@ async function displayAnswer(data) {
         const translatedText = await translateText(answerText, requestedLang);
         if (translatedText) {
             answerText = translatedText;
-            // Optionally, adjust the speech synthesis voice to match the requested language
+            
         }
     }
 
@@ -153,12 +153,13 @@ async function translateText(text, targetLang) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                auth: "A17565121", // Replace with your actual UCSD PID
+                auth: "A17565121", 
                 text: text,
                 target_lang: targetLang,
             }),
         });
         const data = await response.json();
+        console.log('Translation API response:', data); // Debugging line
         if (response.ok) {
             return data.translation; // Return the translation
         } else {
