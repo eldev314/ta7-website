@@ -112,11 +112,76 @@ async function callInferenceAPI(transcription) {
 }
 
 
-function displayAnswer(data) {
-    document.getElementById("answer").innerText = `Forecast: ${data.forecast} Suggestion: ${data.suggestion}`;
+async function displayAnswer(data) {
+    const transcription = document.getElementById("transcription").innerText;
+    const requestedLang = getRequestedLanguage(transcription);
+    let answerText = data.suggestion || `Forecast: ${data.forecast}`;
+
+    if (requestedLang) {
+        const translatedText = await translateText(answerText, requestedLang);
+        if (translatedText) {
+            answerText = translatedText;
+            // Optionally, adjust the speech synthesis voice to match the requested language
+        }
+    }
+
+    document.getElementById("answer").innerText = answerText;
+    // Store the answer for playback
+    document.getElementById("playbackBtn").setAttribute("data-text-to-speak", answerText);
+    document.getElementById("playbackBtn").style.display = 'inline'; // Show the playback button
 }
 
-function speak(text) {
+function getRequestedLanguage(transcription) {
+    const languageRegex = /answer in (chinese|french|spanish|arabic|russian|german|japanese|portuguese|hindi)/i;
+    const matches = transcription.match(languageRegex);
+    if (matches && matches[1]) {
+        // Map the language to the corresponding target_lang code
+        const languages = {
+            chinese: 'zh', french: 'fr', spanish: 'es', arabic: 'ar',
+            russian: 'ru', german: 'de', japanese: 'ja', portuguese: 'pt', hindi: 'hi'
+        };
+        return languages[matches[1].toLowerCase()];
+    }
+    return null; // Return null if no language request is found
+}
+
+async function translateText(text, targetLang) {
+    try {
+        const response = await fetch("https://ece140.frosty-sky-f43d.workers.dev/api/translate", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                auth: "A17565121", // Replace with your actual UCSD PID
+                text: text,
+                target_lang: targetLang,
+            }),
+        });
+        const data = await response.json();
+        if (response.ok) {
+            return data.translation; // Return the translation
+        } else {
+            console.error('Error during translation:', data);
+            return null;
+        }
+    } catch (error) {
+        console.error('Failed to translate text:', error);
+        return null;
+    }
+}
+
+
+document.getElementById('playbackBtn').addEventListener('click', function() {
+    const textToSpeak = this.getAttribute("data-text-to-speak");
+    const requestedLang = getRequestedLanguage(document.getElementById("transcription").innerText);
+    speak(textToSpeak, requestedLang);
+});
+
+function speak(text, langCode) {
     const utterance = new SpeechSynthesisUtterance(text);
+    if (langCode) {
+        utterance.lang = langCode;
+    }
     speechSynthesis.speak(utterance);
 }
