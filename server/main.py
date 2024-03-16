@@ -59,8 +59,35 @@ def get_voice_page(request: Request) -> HTMLResponse:
         with open("views/voice_ai.html") as html:
             return HTMLResponse(content=html.read())
     else:
-        return HTMLResponse(content="You are not logged in. Please <a href='/login'>log in</a> to access the voice AI.")
+        not_logged_in_html = """
+            <html>
+            <head>
+                <style>
+                    /* Reset default margin and padding */
+                    * {
+                      margin: 0;
+                      padding: 0;
+                    }
 
+                    body {
+                      background: #f4f4f4; /* Very light gray background */
+                      margin: 2rem;
+                      color: #333; /* Dark gray text color */
+                      font-size: 1.2rem; /* Larger font size */
+                      font-family: Arial, sans-serif; /* Use Arial or a sans-serif font */
+                    }
+
+                    /* Add other styles from rest.css here */
+
+                </style>
+            </head>
+            <body>
+                <p>You are not logged in. Please <a href="/login">log in</a> to access the voice AI.</p>
+            </body>
+            </html>
+        """
+        return HTMLResponse(content=not_logged_in_html)
+    
 @app.get('/create_user')
 def get_create_user(request:Request) -> HTMLResponse:
   with open("views/create_user.html") as html:
@@ -73,7 +100,34 @@ def get_data_page(request: Request) -> HTMLResponse:
         with open("views/data.html") as html:
             return HTMLResponse(content=html.read())
     else:
-        return HTMLResponse(content="You are not logged in. Please <a href='/login'>log in</a> to access the data.")
+        not_logged_in_html = """
+            <html>
+            <head>
+                <style>
+                    /* Reset default margin and padding */
+                    * {
+                      margin: 0;
+                      padding: 0;
+                    }
+
+                    body {
+                      background: #f4f4f4; /* Very light gray background */
+                      margin: 2rem;
+                      color: #333; /* Dark gray text color */
+                      font-size: 1.2rem; /* Larger font size */
+                      font-family: Arial, sans-serif; /* Use Arial or a sans-serif font */
+                    }
+
+                    /* Add other styles from rest.css here */
+
+                </style>
+            </head>
+            <body>
+                <p>You are not logged in. Please <a href="/login">log in</a> to access the data.</p>
+            </body>
+            </html>
+        """
+        return HTMLResponse(content=not_logged_in_html)
 
 
 @app.post('/login')
@@ -127,7 +181,8 @@ def get_sessions(request:Request) -> dict:
 # GET /
 @app.get('/', response_class=HTMLResponse)
 def get_index(request:Request) -> HTMLResponse:
-  return views.TemplateResponse('index.html', {'request':request, 'users':db.select_users()})
+  with open("views/login.html") as html:
+    return HTMLResponse(content=html.read())
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 # RESTful User Routes

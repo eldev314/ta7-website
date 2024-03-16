@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
   // Define the 'request' function to handle interactions with the server
   function server_request(url, data={}, verb, callback) {
     return fetch(url, {
@@ -17,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch(error => console.error('Error:', error));
   }
 
-  //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
   // Handle Login POST Request
   let login_form = document.querySelector('form[name=login_form]');
   if (login_form) { // in case we are not on the login page
@@ -33,7 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
       // Submit the POST request
       server_request(action, data, method, (response) => {
         if (response.session_id != 0) {
-          location.replace('/home');
+          // Show login successful popup
+          alert('Login Successful');
+          // Redirect to data page after OK click
+          location.replace('/data');
         }
         else {
           alert('Invalid Username or Password');

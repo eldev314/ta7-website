@@ -57,6 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       inputs[0].focus();
     });
+
+    alert('User created');
   });
 
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
