@@ -13,12 +13,11 @@ function startRecording() {
             audioChunks.push(event.data);
         };
 
-        
         mediaRecorder.onstop = async () => {
             const audioBlob = new Blob(audioChunks);
             const formData = new FormData();
             formData.append("file", audioBlob);
-            formData.append("auth", "A17565121"); 
+            formData.append("auth", "A17565121");
 
             try {
                 const response = await fetch("https://ece140.frosty-sky-f43d.workers.dev/api/transcribe", {
@@ -41,6 +40,7 @@ function startRecording() {
 
         mediaRecorder.start();
         updateUI('recording', 'Recording...');
+        document.getElementById('startRecordingBtn').style.display = 'none'; // Hide start button
         document.getElementById('stopRecordingBtn').style.display = 'inline'; // Show stop button
     })
     .catch(error => {
@@ -54,6 +54,7 @@ function stopRecording() {
         mediaRecorder.stop();
         updateUI('stopped', 'Recording stopped.');
         document.getElementById('stopRecordingBtn').style.display = 'none'; // Hide stop button
+        document.getElementById('startRecordingBtn').style.display = 'inline'; // Show start button
     }
 }
 

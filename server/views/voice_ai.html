@@ -1,18 +1,25 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Voice Assistant</title>
-    <link rel='stylesheet' type='text/css' href='public/rest.css'>
+    <link rel="stylesheet" type="text/css" href="public/voice.css">
 </head>
 <body>
-    <h1>Voice Assistant for Weather Queries</h1>
-    <button id="startRecordingBtn">Start Recording</button>
-    <button id="stopRecordingBtn" style="display: none;">Stop Recording</button> 
-    <p id="status"></p> <!-- Status text -->
-    <p><strong>Transcription:</strong> <span id="transcription"></span></p>
-    <p><strong>Answer:</strong> <span id="answer"></span></p>
-<button id="playbackBtn" style="display: none;">Play Answer</button>
-    <script src="public/voice.js"></script> 
+    <div class="container">
+        <h1>Voice Assistant for Weather Queries</h1>
+        <div class="buttons">
+            <button id="startRecordingBtn" class="record-btn">Start Recording</button>
+            <button id="stopRecordingBtn" class="record-btn" style="display: none;">Stop Recording</button>
+            <button id="playbackBtn" class="playback-btn" style="display: none;">Play Answer</button>
+        </div>
+        <p id="status"></p>
+        <div class="result">
+            <p><strong>Transcription:</strong> <span id="transcription"></span></p>
+            <p><strong>Answer:</strong> <span id="answer"></span></p>
+        </div>
+    </div>
+    <script src="public/voice.js"></script>
 </body>
 </html>
